@@ -6,14 +6,14 @@ class ProductDataService {
     }
   
     get(id) {
-      return http.get(`/${id}`);
+      return http.get(`/${id}`); //??
     }
   
     create(productData) {
       return http.post(`/save`, productData);
     }
   
-    update(id, productData) {
+    update(id, productData) {   
       return http.put(`/update/${id}`, productData);
     }
   

@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 
 const productName = ref('');
 const productDescription = ref('');
-const date = ref('');
+// const date = ref('');
 const startQuantity = ref('');
 const soldQuantity = ref('');
 const rawPrice = ref('');
@@ -21,7 +21,7 @@ const saveProduct = async () => {
     const formData = {
         productName: productName.value,
         productDescription: productDescription.value,
-        date: date.value,
+        // date: date.value,
         startQuantity: startQuantity.value,
         soldQuantity: soldQuantity.value,
         rawPrice: rawPrice.value,
@@ -53,7 +53,7 @@ const saveProduct = async () => {
 
             <input class="form-control mb-2" type="text" v-model="productDescription" placeholder="Description" />
 
-            <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required />
+            <!-- <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required /> -->
 
             <input class="form-control mb-2" type="number"  v-model="startQuantity" placeholder="Start quantity" />
 

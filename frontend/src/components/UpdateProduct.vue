@@ -1,13 +1,14 @@
 <script setup>
-import {ref,onBeforeMount} from 'vue';
-import ProductServices from '../services/productServices';
-import { useRouter } from 'vue-router';
+import {ref, onBeforeMount} from 'vue';
+import productServices from '../services/productServices';
+import { useRoute, useRouter } from 'vue-router'; 
 
-const id = this.$route.params.id;     ////?
+const route = useRoute();
+const router = useRouter();
 
 const productName = ref('');
 const productDescription = ref('');
-const date = ref('');
+// const date = ref('');
 const startQuantity = ref('');
 const soldQuantity = ref('');
 const rawPrice = ref('');
@@ -15,80 +16,78 @@ const marketPrice = ref('');
 const benefits = ref('');
 const availableQuantity = ref('');
 
-const router = useRouter();
-//befor mount
+// // Sample backend date string
+// const backendDateStr = '2023-09-11T14:30:00';
+// // Parse the backend date string into a Date object
+// const dateObject = new Date(backendDateStr);
+// const year = dateObject.getFullYear();
+// const month = dateObject.getMonth() + 1;
+// const day = dateObject.getDate();
+// // Format the components as needed for my dropdown date picker
+// const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-onBeforeMount(() => {
-      // You can define and retrieve the 'id' variable here before the component is mounted
-      const id = this.$route.params.id; // Replace with your actual 'id' retrieval logic
-      const formData = {
-        productName: productName.value,
-        productDescription: productDescription.value,
-        date: date.value,
-        startQuantity: startQuantity.value,
-        soldQuantity: soldQuantity.value,
-        rawPrice: rawPrice.value,
-        marketPrice: marketPrice.value,
-        benefits: benefits.value,
-        availableQuantity: availableQuantity.value,
-      };
-    //   updateProduct(id, formData);
-    });
+const productId = route.params.id; // Obtiene el ID del producto desde la ruta
+const loadProductData = async () => {
+    console.log('loadProductData Id',productId);
 
-    // return {
-    //   // Return any data properties you want to expose to the template
-    //   productName,
-    //   productDescription,
-    //   date,
-    //   startQuantity,
-    //   soldQuantity,
-    //   rawPrice,
-    //   marketPrice,
-    //   benefits,
-    //   availableQuantity,
-    // };
-//   },
-// };
-
-
-const updateProduct = async () => {
-
-    const formData = {
-        productName: productName.value,
-        productDescription: productDescription.value,
-        date: date.value,
-        startQuantity: startQuantity.value,
-        soldQuantity: soldQuantity.value,
-        rawPrice: rawPrice.value,
-        marketPrice: marketPrice.value,
-        benefits: benefits.value,
-        availableQuantity: availableQuantity.value
-    };
-    try
-    {
-      console.log("form data", formData)
-        await ProductServices.put(id,formData)
-        console.log("Surprise!!! You successfully edited the product!");
-        router.push("/")
-    }
-    catch (error)
-    {
-        console.error("Error while saving product:",error);
+    try {
+    const response = await productServices.get(productId);
+    const formData = response.data;
+            
+    productName.value = formData.productName,
+    productDescription.value = formData.productDescription,
+    // date.value = formData.formattedDate,    //formData.formattedDate
+    startQuantity.value = formData.startQuantity,
+    soldQuantity.value = formData.soldQuantity,
+    rawPrice.value = formData.rawPrice,
+    marketPrice.value = formData.marketPrice,
+    benefits.value = formData.benefits,
+    availableQuantity.value = formData.availableQuantity
+    } catch (error) {
+    console.error("Error al obtener los datos del producto: ", error);
     }
 }
+onBeforeMount(async () => {
+    loadProductData();
+});
 
+const updateProduct = async(event) => { /// id
+    console.log(`updateProduct ${productId}`);
+    console.log("Product Id to EDIT: " +  productId);  ///CONSOLE
+    event.preventDefault();
 
+const editedData = {
+    productName : productName.value,
+    productDescription : productDescription.value,
+    // formattedDate : formattedDate.value,            ///formattedDate
+    startQuantity : startQuantity.value,
+    soldQuantity : soldQuantity.value,
+    rawPrice : rawPrice.value,
+    marketPrice : marketPrice.value,
+    benefits : benefits.value,
+    availableQuantity : availableQuantity.value 
+    };
+    try {
+    await productServices.update(productId, editedData);
+    // const editedProduct = response.data
+    console.log("The product is updated with Id " + productId, editedData.productName) ;
+    router.push("/");
+    } catch (error){
+    console.error("Error occured while updating the product", error);
+    }
+
+}
 </script>
 
 <template>
     <div class="d-flex justify-content-center align-items-center" > 
-        <form @submit.prevent="updateProduct">
+        <form @submit="updateProduct">
 
             <input class="form-control mb-2" type="text" v-model="productName" placeholder="Product Name" required />
 
             <input class="form-control mb-2" type="text" v-model="productDescription" placeholder="Description" />
 
-            <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required />
+            <!-- <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required /> -->
 
             <input class="form-control mb-2" type="number"  v-model="startQuantity" placeholder="Start quantity" />
 
@@ -103,6 +102,7 @@ const updateProduct = async () => {
             <input class="form-control mb-2" type="number" v-model="availableQuantity" placeholder="Available units"/>
 
             <button type="submit" class="btn btn-success btn-sm  rounded mt-3">Save changes</button>
+            <!-- @click="updateProduct(route.params.id)"  -->
         </form>
     </div> 
 </template>
