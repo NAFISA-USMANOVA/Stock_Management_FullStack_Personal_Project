@@ -28,9 +28,7 @@ onBeforeMount(async() => {
 </script>
 <template> 
     <div class="m-3">
-        <router-link to="/input">
-            <button type="submit" class="btn btn-primary btn-sm  rounded mt-3">New Product</button>
-        </router-link>
+        
         <div>
             <div class="table-responsive">
                 <table class="table">
@@ -71,11 +69,18 @@ onBeforeMount(async() => {
                 </table>
             </div>
         </div>
+        <div class="row w-100 text-center" style="margin-top:10px;">
+            <router-link to="/input">
+                <button type="submit" class="btn btn-primary btn-sm  rounded mx-5 ">New Product</button>
+            </router-link>
+        </div>
     </div>
 </template>
 <style scoped>
 .table {
+    margin-top: 40px;
     width: 100%;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
- }
+    text-align:center;
+}
 </style>

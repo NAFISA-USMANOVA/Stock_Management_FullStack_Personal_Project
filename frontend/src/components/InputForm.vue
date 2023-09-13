@@ -46,26 +46,26 @@ const saveProduct = async () => {
 </script>
 
 <template>
-    <div class="d-flex justify-content-center align-items-center" >
+    <div class="d-flex justify-content-center align-items-center mt-5" >
         <form @submit.prevent="saveProduct">
 
-            <input class="form-control mb-2" type="text" v-model="productName" placeholder="Product Name" required />
+            <input class="form-control mb-2 bg-light " type="text" v-model="productName" placeholder="Product Name" required />
 
-            <input class="form-control mb-2" type="text" v-model="productDescription" placeholder="Description" />
+            <input class="form-control mb-2 bg-light" type="text" v-model="productDescription" placeholder="Description" />
 
             <!-- <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required /> -->
 
-            <input class="form-control mb-2" type="number"  v-model="startQuantity" placeholder="Start quantity" />
+            <input class="form-control mb-2 bg-light" type="number"  v-model="startQuantity" placeholder="Start quantity" />
 
-            <input class="form-control mb-2" type="number"  v-model="soldQuantity" placeholder="Sold units" />
+            <input class="form-control mb-2 bg-light" type="number"  v-model="soldQuantity" placeholder="Sold units" />
 
-            <input class="form-control mb-2" type="number" v-model="rawPrice" placeholder="Raw price of product"/>
+            <input class="form-control mb-2 bg-light" type="number" v-model="rawPrice" placeholder="Raw price of product"/>
 
-            <input class="form-control mb-2" type="number" v-model="marketPrice" placeholder="Market price"/>
+            <input class="form-control mb-2 bg-light" type="number" v-model="marketPrice" placeholder="Market price"/>
 
-            <input class="form-control mb-2" type="number" v-model="benefits" placeholder="Benefits"/>
+            <input class="form-control mb-2 bg-light" type="number" v-model="benefits" placeholder="Benefits"/>
 
-            <input class="form-control mb-2" type="number" v-model="availableQuantity" placeholder="Available units"/>
+            <input class="form-control mb-2 bg-light" type="number" v-model="availableQuantity" placeholder="Available units"/>
 
             <button type="submit" class="btn btn-success btn-sm  rounded mt-3">Save</button>
         </form>
