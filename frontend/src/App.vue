@@ -14,7 +14,7 @@ import NavbarComponent from './components/NavbarComponent.vue';
 
 <style scoped>
 .background{
-  background-color: rgb(214, 239, 204);
+  background-color: rgba(191, 200, 195, 0.8);
   border-spacing: 5px;
   width: auto;
   height:100vh;

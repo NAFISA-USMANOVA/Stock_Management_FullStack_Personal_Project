@@ -2,12 +2,22 @@
 <script setup>
 import {onBeforeMount, ref} from 'vue';
 import productServices from '../services/productServices';
+
 const products = ref([]);
+
+const highlightedRowId = ref(null);
+const highlightRow = (productId) => {
+  highlightedRowId.value = productId;
+};
+
+const unhighlightRow = () => {
+  highlightedRowId.value = null; 
+};
 
 const deleteProduct = async(id) => {
     await productServices.delete(id);
     products.value.data.pop(id);
-    console.log("You successfully deleted the product with id " + id);
+    alert("You successfully deleted the product with id " + id);
 };
 
 onBeforeMount(async() => {
@@ -17,10 +27,14 @@ onBeforeMount(async() => {
 </script>
 <template> 
     <div class="m-3">
-        
+        <div class="row w-100 text-center" style="margin-top:10px;">
+            <router-link to="/input">
+                <button type="submit" class="btn btn-primary btn-sm  rounded mb-1 ">New Product</button>
+            </router-link>
+        </div>
         <div>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th class="rounded-start">ID</th>
@@ -37,7 +51,7 @@ onBeforeMount(async() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="product in products.data" :key="product.id">
+                        <tr v-for="product in products.data" :key="product.id"  @mouseenter="highlightRow(product.id)" @mouseleave="unhighlightRow(product.id)">
                             <td class="rounded-start">{{ product.id }}</td>
                             <td>{{ product.productName }}</td>
                             <td>{{ product.productDescription }}</td>
@@ -49,7 +63,6 @@ onBeforeMount(async() => {
                             <td>{{ product.benefits }}</td>
                             <td>{{ product.availableQuantity }}</td>
                             <td class="rounded-end">
-                                <!-- <router-link :to="{path: `/update/`+id}" class="btn btn-seccess  fas fa-pen py-2 px-2">Edit</router-link> -->
                                 <a class="btn btn-warning  fas fa-pen py-2 px-2" :href="`/update/${product.id}`"></a>
                                 <a @click="deleteProduct(product.id)" class="btn btn-danger fa fa-trash-alt py-2 px-2"></a>
                             </td>

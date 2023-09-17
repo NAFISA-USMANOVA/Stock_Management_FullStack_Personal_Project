@@ -17,4 +17,7 @@
 
 
 <style scoped>
+.navbar{
+    background-image: url('../assets/grafico-mercado-valores-datos-financieros-placa-electronica-pantalla-ordenador-portatil.jpg'); 
+}
 </style>
