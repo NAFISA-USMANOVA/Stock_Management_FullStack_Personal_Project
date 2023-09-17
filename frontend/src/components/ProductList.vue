@@ -4,17 +4,6 @@ import {onBeforeMount, ref} from 'vue';
 import productServices from '../services/productServices';
 const products = ref([]);
 
-// const product = ref();
-
-
-// const updateProduct = async(id) => {
-//     await productServices.update(id);
-//     product.value.data(id); ///?
-//     console.log("The product is updated" + id) ;
-// }
-
-
-
 const deleteProduct = async(id) => {
     await productServices.delete(id);
     products.value.data.pop(id);
@@ -37,7 +26,7 @@ onBeforeMount(async() => {
                             <th class="rounded-start">ID</th>
                             <th>Product name</th>
                             <th>Description</th>
-                            <!-- <th>Entry date</th> -->
+                            <th>Entry date</th>
                             <th>Start quantity</th>
                             <th>Sold units</th>
                             <th>Raw price</th>
@@ -52,7 +41,7 @@ onBeforeMount(async() => {
                             <td class="rounded-start">{{ product.id }}</td>
                             <td>{{ product.productName }}</td>
                             <td>{{ product.productDescription }}</td>
-                            <!-- <td>{{ product.date }}</td> -->
+                            <td>{{ product.date }}</td>
                             <td>{{ product.startQuantity }}</td>
                             <td>{{ product.soldQuantity }}</td>
                             <td>{{ product.rawPrice }}</td>
