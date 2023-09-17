@@ -20,10 +20,11 @@ public class ProductService {
     }
     public Optional<Product> getProduct(Long id) {
 
-        return productRepository.findById(id); //+.get()
+        return productRepository.findById(id);
     }
 
     public Product saveProduct(Product product) {
+
         return productRepository.save(product);
     }
 

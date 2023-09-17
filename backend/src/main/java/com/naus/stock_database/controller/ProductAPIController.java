@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/product_list") //??? "/product"
+@RequestMapping("/product_list")
 public class ProductAPIController {
     @Autowired
     private ProductService productService;
@@ -32,13 +32,13 @@ public class ProductAPIController {
         return productService.saveProduct(product);
     }
 
-    @PutMapping("/update/{id}") // or productId ?
+    @PutMapping("/update/{id}")
     public String updateProductDetails(@PathVariable Long id, @RequestBody Product product){
         product.setId(id);
         return (productService.updateProductDetails(product));
     }
-    @DeleteMapping("/delete/{id}") // or id ?
-    public String deleteProductDetails( @PathVariable Long id){       //???
+    @DeleteMapping("/delete/{id}")
+    public String deleteProductDetails( @PathVariable Long id){
         productService.deleteProductDetails(id);
         return "Product with Id" + id + " was Deleted Successfully" ;
     }
