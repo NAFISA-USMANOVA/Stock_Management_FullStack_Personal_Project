@@ -16,7 +16,7 @@ const unhighlightRow = () => {
 
 const deleteProduct = async(id) => {
     await productServices.delete(id);
-    products.value.data.pop(id);
+    products.value.data = products.value.data.filter((product) => product.id !== id);
     alert("You successfully deleted the product with id " + id);
 };
 

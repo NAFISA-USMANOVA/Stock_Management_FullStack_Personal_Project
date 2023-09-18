@@ -17,28 +17,16 @@ const marketPrice = ref('');
 const benefits = ref('');
 const availableQuantity = ref('');
 
-// Sample backend date string
-const backendDateStr = '2023-09-11T14:30:00';
-// Parse the backend date string into a Date object
-const dateObject = new Date(backendDateStr);
-const year = dateObject.getFullYear();
-const month = dateObject.getMonth() + 1;
-const day = dateObject.getDate();
-// Format the components as needed for my dropdown date picker
-const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-// const productId = route.params.id; // Obtienemos ID del producto desde la ruta
-
-const loadProductData = async () => {  //Traer los datos del producto para la edición
+const loadProductData = async () => { 
     console.log('loadProductData Id',productId);
 
     try {
     const response = await productServices.get(productId);
     const formData = response.data; 
-            
+      
     productName.value = formData.productName,
     productDescription.value = formData.productDescription,
-    date.value = formData.formattedDate,    
+    date.value = formData.date,    
     startQuantity.value = formData.startQuantity,
     soldQuantity.value = formData.soldQuantity,
     rawPrice.value = formData.rawPrice,
@@ -46,7 +34,7 @@ const loadProductData = async () => {  //Traer los datos del producto para la ed
     benefits.value = formData.benefits,
     availableQuantity.value = formData.availableQuantity
     } catch (error) {
-    console.error("Error al obtener los datos del producto: ", error);
+    console.error("Error while getting product data: ", error);
     }
 }
 onBeforeMount(async () => {
@@ -55,14 +43,14 @@ onBeforeMount(async () => {
 
 const updateProduct = async(event) => { 
     alert(`The product with ID ${productId} is edited successfully.`);
-    console.log("Product Id to EDIT: " +  productId);  ///CONSOLE
+    console.log("Product Id to EDIT: " +  productId);  
     event.preventDefault();   //para evitar la recarga de la página cuando se envía formulario. IMPORTANTE!!!
 
-    // crear un objeto con propiedades
+    // crear un objeto con props
 const editedData = {
     productName : productName.value,
     productDescription : productDescription.value,
-    formattedDate : formattedDate.value,          
+    date : date.value,                  
     startQuantity : startQuantity.value,
     soldQuantity : soldQuantity.value,
     rawPrice : rawPrice.value,
@@ -73,6 +61,7 @@ const editedData = {
     //solicitud HTTP para actualizar el producto (response.data)
     try {
     await productServices.update(productId, editedData);
+    console.log("Date: "+ productId, date); 
     console.log("The product is updated with Id " + productId, editedData.productName) ;
     router.push("/");
 
@@ -129,7 +118,6 @@ const unitsCalculator = () => {
             <input class="form-control mb-2 bg-light" type="number" v-model="availableQuantity"/>
 
             <button type="submit" class="btn btn-success btn-sm  rounded mt-3">Save changes</button>
-            <!-- @click="updateProduct(route.params.id)"  -->
         </form>
     </div> 
 </template>
