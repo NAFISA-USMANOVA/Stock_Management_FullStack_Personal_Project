@@ -1,16 +1,16 @@
 <script setup>
 import {ref} from 'vue';
-import ProductServices from '../services/productServices';
+import productServices from '../services/productServices';
 import { useRouter } from 'vue-router';
 
 const productName = ref('');
 const productDescription = ref('');
-// const date = ref('');
+const date = ref('');
 const startQuantity = ref('');
 const soldQuantity = ref('');
 const rawPrice = ref('');
 const marketPrice = ref('');
-const benefits = ref('');
+const benefits = ref(0);
 const availableQuantity = ref('');
 
 const router = useRouter();
@@ -21,7 +21,7 @@ const saveProduct = async () => {
     const formData = {
         productName: productName.value,
         productDescription: productDescription.value,
-        // date: date.value,
+        date: date.value,
         startQuantity: startQuantity.value,
         soldQuantity: soldQuantity.value,
         rawPrice: rawPrice.value,
@@ -32,8 +32,8 @@ const saveProduct = async () => {
     try
     {
       console.log("form data", formData)
-        await ProductServices.create(formData)
-        console.log("Surprise!!! You successfully created (saved) a product!");
+        await productServices.create(formData)
+        alert("The product is saved successfully!");
         router.push("/")
     }
     catch (error)
@@ -41,33 +41,54 @@ const saveProduct = async () => {
         console.error("Error while saving product:",error);
     }
 }
+const benefitCalculator = () => {
+    const salePrice = marketPrice.value;
+    const approuchPrice =rawPrice.value;
+    const unitsSold = soldQuantity.value;
+    const benefitRate = (salePrice - approuchPrice) * unitsSold;
+    benefits.value=benefitRate;
+};
+const unitsCalculator = () => {
+    const unitsApprouched = startQuantity.value;
+    const unitsSold = soldQuantity.value;
+    const unitsLeft = unitsApprouched - unitsSold;
+    availableQuantity.value=unitsLeft;
+};
 
 
 </script>
 
 <template>
-    <div class="d-flex justify-content-center align-items-center" >
+    <div class="d-flex justify-content-center align-items-center mt-5" >
         <form @submit.prevent="saveProduct">
+            <label for="productName">Product Name</label>
+            <input class="form-control mb-2 bg-light " type="text" v-model="productName" required autocomplete="productName" />
 
-            <input class="form-control mb-2" type="text" v-model="productName" placeholder="Product Name" required />
+            <label for="productDescription">Description</label>
+            <input class="form-control mb-2 bg-light" type="text" v-model="productDescription" />
 
-            <input class="form-control mb-2" type="text" v-model="productDescription" placeholder="Description" />
+            <label for="date">Date</label>
+            <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date"  />
 
-            <!-- <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required /> -->
+            <label for="startQuantity">Start quantity of product</label>
+            <input class="form-control mb-2 bg-light" type="number"  v-model="startQuantity" @change="unitsCalculator()"/>
 
-            <input class="form-control mb-2" type="number"  v-model="startQuantity" placeholder="Start quantity" />
+            <label for="soldQuantity">Sold units of product</label>
+            <input class="form-control mb-2 bg-light" type="number"  v-model="soldQuantity" id="soldQuantity" @input="benefitCalculator()"   @change="unitsCalculator()"/>
 
-            <input class="form-control mb-2" type="number"  v-model="soldQuantity" placeholder="Sold units" />
+            <label for="rawPrice">Raw price of product (€)</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="rawPrice" id="rawPrice" @input="benefitCalculator()"/>
 
-            <input class="form-control mb-2" type="number" v-model="rawPrice" placeholder="Raw price of product"/>
+            <label for="marketPrice">Market price (€)</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="marketPrice" id="marketPrice" @input="benefitCalculator()"/>
 
-            <input class="form-control mb-2" type="number" v-model="marketPrice" placeholder="Market price"/>
+            <label for="benefits">Benefits (€)</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="benefits" id="benefits"/>
 
-            <input class="form-control mb-2" type="number" v-model="benefits" placeholder="Benefits"/>
-
-            <input class="form-control mb-2" type="number" v-model="availableQuantity" placeholder="Available units"/>
+            <label for="availableQuantity">Available units of product</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="availableQuantity"/>
 
             <button type="submit" class="btn btn-success btn-sm  rounded mt-3">Save</button>
         </form>
     </div> 
-</template>=
+</template>

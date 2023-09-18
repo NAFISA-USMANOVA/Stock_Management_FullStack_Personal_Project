@@ -5,10 +5,11 @@ import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
+const productId = route.params.id;
 
 const productName = ref('');
 const productDescription = ref('');
-// const date = ref('');
+const date = ref('');
 const startQuantity = ref('');
 const soldQuantity = ref('');
 const rawPrice = ref('');
@@ -16,27 +17,16 @@ const marketPrice = ref('');
 const benefits = ref('');
 const availableQuantity = ref('');
 
-// // Sample backend date string
-// const backendDateStr = '2023-09-11T14:30:00';
-// // Parse the backend date string into a Date object
-// const dateObject = new Date(backendDateStr);
-// const year = dateObject.getFullYear();
-// const month = dateObject.getMonth() + 1;
-// const day = dateObject.getDate();
-// // Format the components as needed for my dropdown date picker
-// const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-const productId = route.params.id; // Obtiene el ID del producto desde la ruta
-const loadProductData = async () => {
+const loadProductData = async () => { 
     console.log('loadProductData Id',productId);
 
     try {
     const response = await productServices.get(productId);
-    const formData = response.data;
-            
+    const formData = response.data; 
+      
     productName.value = formData.productName,
     productDescription.value = formData.productDescription,
-    // date.value = formData.formattedDate,    //formData.formattedDate
+    date.value = formData.date,    
     startQuantity.value = formData.startQuantity,
     soldQuantity.value = formData.soldQuantity,
     rawPrice.value = formData.rawPrice,
@@ -44,22 +34,23 @@ const loadProductData = async () => {
     benefits.value = formData.benefits,
     availableQuantity.value = formData.availableQuantity
     } catch (error) {
-    console.error("Error al obtener los datos del producto: ", error);
+    console.error("Error while getting product data: ", error);
     }
 }
 onBeforeMount(async () => {
     loadProductData();
 });
 
-const updateProduct = async(event) => { /// id
-    console.log(`updateProduct ${productId}`);
-    console.log("Product Id to EDIT: " +  productId);  ///CONSOLE
-    event.preventDefault();
+const updateProduct = async(event) => { 
+    alert(`The product with ID ${productId} is edited successfully.`);
+    console.log("Product Id to EDIT: " +  productId);  
+    event.preventDefault();   //para evitar la recarga de la página cuando se envía formulario. IMPORTANTE!!!
 
+    // crear un objeto con props
 const editedData = {
     productName : productName.value,
     productDescription : productDescription.value,
-    // formattedDate : formattedDate.value,            ///formattedDate
+    date : date.value,                  
     startQuantity : startQuantity.value,
     soldQuantity : soldQuantity.value,
     rawPrice : rawPrice.value,
@@ -67,42 +58,66 @@ const editedData = {
     benefits : benefits.value,
     availableQuantity : availableQuantity.value 
     };
+    //solicitud HTTP para actualizar el producto (response.data)
     try {
     await productServices.update(productId, editedData);
-    // const editedProduct = response.data
+    console.log("Date: "+ productId, date); 
     console.log("The product is updated with Id " + productId, editedData.productName) ;
     router.push("/");
+
     } catch (error){
     console.error("Error occured while updating the product", error);
     }
 
 }
+
+const benefitCalculator = () => {
+    const salePrice = marketPrice.value;
+    const approuchPrice =rawPrice.value;
+    const unitsSold = soldQuantity.value;
+    const benefitRate = (salePrice - approuchPrice) * unitsSold;
+    benefits.value=benefitRate;
+};
+const unitsCalculator = () => {
+    const unitsApprouched = startQuantity.value;
+    const unitsSold = soldQuantity.value;
+    const unitsLeft = unitsApprouched - unitsSold;
+    availableQuantity.value=unitsLeft;
+};
 </script>
 
 <template>
     <div class="d-flex justify-content-center align-items-center" > 
         <form @submit="updateProduct">
 
-            <input class="form-control mb-2" type="text" v-model="productName" placeholder="Product Name" required />
+            <label for="productName">Product Name</label>
+            <input class="form-control mb-2 bg-light " type="text" v-model="productName" required autocomplete="productName" />
 
-            <input class="form-control mb-2" type="text" v-model="productDescription" placeholder="Description" />
+            <label for="productDescription">Description</label>
+            <input class="form-control mb-2 bg-light" type="text" v-model="productDescription" />
 
-            <!-- <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date" required /> -->
+            <label for="date">Date</label>
+            <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date"  />
 
-            <input class="form-control mb-2" type="number"  v-model="startQuantity" placeholder="Start quantity" />
+            <label for="startQuantity">Start quantity of product</label>
+            <input class="form-control mb-2 bg-light" type="number"  v-model="startQuantity" @change="unitsCalculator()"/>
 
-            <input class="form-control mb-2" type="number"  v-model="soldQuantity" placeholder="Sold units" />
+            <label for="soldQuantity">Sold units of product</label>
+            <input class="form-control mb-2 bg-light" type="number"  v-model="soldQuantity" id="soldQuantity" @input="benefitCalculator()"   @change="unitsCalculator()"/>
 
-            <input class="form-control mb-2" type="number" v-model="rawPrice" placeholder="Raw price of product"/>
+            <label for="rawPrice">Raw price of product (€)</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="rawPrice" id="rawPrice" @input="benefitCalculator()"/>
 
-            <input class="form-control mb-2" type="number" v-model="marketPrice" placeholder="Market price"/>
+            <label for="marketPrice">Market price (€)</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="marketPrice" id="marketPrice" @input="benefitCalculator()"/>
 
-            <input class="form-control mb-2" type="number" v-model="benefits" placeholder="Benefits"/>
+            <label for="benefits">Benefits (€)</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="benefits" id="benefits"/>
 
-            <input class="form-control mb-2" type="number" v-model="availableQuantity" placeholder="Available units"/>
+            <label for="availableQuantity">Available units of product</label>
+            <input class="form-control mb-2 bg-light" type="number" v-model="availableQuantity"/>
 
             <button type="submit" class="btn btn-success btn-sm  rounded mt-3">Save changes</button>
-            <!-- @click="updateProduct(route.params.id)"  -->
         </form>
     </div> 
 </template>
