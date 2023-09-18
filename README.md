@@ -32,6 +32,8 @@ The app features an intuitive user interface that allows users, even without tec
 Make changes to your product details efficiently, saving you time and effort in managing your inventory.
 In this template have been used some icons from Fontawesome (CDN) and an image from Pixabay.
 
+## Figma Mockup: [StockControl](https://www.figma.com/file/qgeymJ8ZXfYenV2gk60hXN/Stock-Control?type=design&node-id=0-1&mode=design&t=27XGVtS97xkVLrb9-0)
+
 ## Recommended IDE Setup
 <em>Backend: </em>[IntellijIDEA](https://www.jetbrains.com/idea/)
 
