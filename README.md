@@ -33,6 +33,7 @@ Make changes to your product details efficiently, saving you time and effort in 
 In this template have been used some icons from Fontawesome (CDN) and an image from Pixabay.
 
 ## Figma Mockup: [StockControl](https://www.figma.com/file/qgeymJ8ZXfYenV2gk60hXN/Stock-Control?type=design&node-id=0-1&mode=design&t=27XGVtS97xkVLrb9-0)
+## Jira: [Stock Control board](https://naus7568.atlassian.net/jira/software/projects/STOCK/boards/4)
 
 ## Recommended IDE Setup
 <em>Backend: </em>[IntellijIDEA](https://www.jetbrains.com/idea/)
