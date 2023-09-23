@@ -2,12 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ProductList from '../components/ProductList.vue'
 import InputForm from '../components/InputForm.vue'
 import UpdateProduct from '../components/UpdateProduct.vue'
+// import FormComponent from '../components/FormComponent.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/', //
+      path: '/',
       name: 'product_list',
       component: ProductList
     },
@@ -21,8 +22,16 @@ const router = createRouter({
       name: 'update_product',
       component: UpdateProduct
     }
-
-
+    // {
+    //   path: '/create',
+    //   name: 'create_product',
+    //   component: FormComponent
+    // },
+    // {
+    //   path: '/edit/:id',
+    //   name: 'edit_product',
+    //   component: FormComponent
+    // }
   ]
 })
 

@@ -31,9 +31,7 @@ const saveProduct = async () => {
     };
     try
     {
-      console.log("form data", formData)
         await productServices.create(formData)
-        alert("The product is saved successfully!");
         router.push("/")
     }
     catch (error)
@@ -54,18 +52,21 @@ const unitsCalculator = () => {
     const unitsLeft = unitsApprouched - unitsSold;
     availableQuantity.value=unitsLeft;
 };
+const cancelOperation = () => {
+    router.push("/");
+}
 
 
 </script>
 
 <template>
-    <div class="d-flex justify-content-center align-items-center mt-5" >
+    <div class="container d-flex justify-content-center mt-2">
         <form @submit.prevent="saveProduct">
             <label for="productName">Product Name</label>
-            <input class="form-control mb-2 bg-light " type="text" v-model="productName" required autocomplete="productName" />
+            <input class="form-control mb-2 bg-light" type="text" v-model="productName" required autocomplete="productName" />
 
             <label for="productDescription">Description</label>
-            <input class="form-control mb-2 bg-light" type="text" v-model="productDescription" />
+            <textarea class="form-control mb-2 bg-light" type="text" v-model="productDescription" rows="3"></textarea> 
 
             <label for="date">Date</label>
             <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date"  />
@@ -88,7 +89,26 @@ const unitsCalculator = () => {
             <label for="availableQuantity">Available units of product</label>
             <input class="form-control mb-2 bg-light" type="number" v-model="availableQuantity"/>
 
-            <button type="submit" class="btn btn-success btn-sm  rounded mt-3">Save</button>
+            <div class="buttons">
+                <button type="submit" class="btn btn-success btn-sm  rounded m-3">Save</button>
+                <button @click="cancelOperation" class="btn btn-success btn-sm  rounded m-3">Cancel</button>
+            </div>
         </form>
     </div> 
+    
 </template>
+<style scoped>
+    .buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content:space-between;
+    }
+    .container {
+  max-width: 100%; 
+  height: auto; 
+}
+    textarea {
+  width: 100%; 
+  height: auto; 
+}
+</style>
