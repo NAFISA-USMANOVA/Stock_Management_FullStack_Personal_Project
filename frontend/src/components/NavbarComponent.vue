@@ -4,9 +4,11 @@
 
 <template>
     <div>
-        <nav class="navbar" style="background-color: #7f4757;">
+        <nav class="navbar">
             <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1 text-white">Stock Control Application</span>
+                <div>
+                    <a href="login" class="">Login</a>
+                </div>
              </div>
         </nav>
     </div>
@@ -15,6 +17,6 @@
 
 <style scoped>
 .navbar{
-    background-image: url('../assets/grafico-mercado-valores-datos-financieros-placa-electronica-pantalla-ordenador-portatil.jpg'); 
+    background-image: url('../assets/fondo-desenfocado-productos-coloridos.jpg'); 
 }
 </style>

@@ -42,12 +42,9 @@ onBeforeMount(async () => {
 });
 
 const updateProduct = async(event) => { 
-    alert(`The product with ID ${productId} is edited successfully.`);
-    console.log("Product Id to EDIT: " +  productId);  
     event.preventDefault();   //para evitar la recarga de la página cuando se envía formulario. IMPORTANTE!!!
 
-    // crear un objeto con props
-const editedData = {
+    const editedData = {
     productName : productName.value,
     productDescription : productDescription.value,
     date : date.value,                  
@@ -58,7 +55,7 @@ const editedData = {
     benefits : benefits.value,
     availableQuantity : availableQuantity.value 
     };
-    //solicitud HTTP para actualizar el producto (response.data)
+
     try {
     await productServices.update(productId, editedData);
     console.log("Date: "+ productId, date); 
@@ -91,19 +88,23 @@ const unitsCalculator = () => {
         <form @submit="updateProduct">
 
             <label for="productName">Product Name</label>
-            <input class="form-control mb-2 bg-light " type="text" v-model="productName" required autocomplete="productName" />
+            <input class="form-control mb-2 bg-light " 
+            type="text" v-model="productName" required autocomplete="productName" />
 
             <label for="productDescription">Description</label>
-            <input class="form-control mb-2 bg-light" type="text" v-model="productDescription" />
+            <textarea class="form-control mb-2 bg-light" type="text" v-model="productDescription" rows="3"></textarea>
 
             <label for="date">Date</label>
-            <input type="date" class="form-control form-control-m mr-1 mb-2" v-model="date"  />
+            <input type="date" 
+            class="form-control form-control-m mr-1 mb-2" v-model="date"/>
 
             <label for="startQuantity">Start quantity of product</label>
-            <input class="form-control mb-2 bg-light" type="number"  v-model="startQuantity" @change="unitsCalculator()"/>
+            <input class="form-control mb-2 bg-light" 
+            type="number"  v-model="startQuantity" @change="unitsCalculator()"/>
 
             <label for="soldQuantity">Sold units of product</label>
-            <input class="form-control mb-2 bg-light" type="number"  v-model="soldQuantity" id="soldQuantity" @input="benefitCalculator()"   @change="unitsCalculator()"/>
+            <input class="form-control mb-2 bg-light" 
+            type="number"  v-model="soldQuantity" id="soldQuantity" @input="benefitCalculator()"   @change="unitsCalculator()"/>
 
             <label for="rawPrice">Raw price of product (€)</label>
             <input class="form-control mb-2 bg-light" type="number" v-model="rawPrice" id="rawPrice" @input="benefitCalculator()"/>
