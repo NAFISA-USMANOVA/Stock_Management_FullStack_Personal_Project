@@ -31,7 +31,9 @@ const saveProduct = async () => {
     };
     try
     {
+        console.log("form data", formData)
         await productServices.create(formData)
+        alert("The product is saved successfully!");
         router.push("/")
     }
     catch (error)
@@ -41,10 +43,10 @@ const saveProduct = async () => {
 }
 const benefitCalculator = () => {
     const salePrice = marketPrice.value;
-    const approuchPrice =rawPrice.value;
+    const approuchPrice = rawPrice.value;
     const unitsSold = soldQuantity.value;
     const benefitRate = (salePrice - approuchPrice) * unitsSold;
-    benefits.value=benefitRate;
+    benefits.value = benefitRate;
 };
 const unitsCalculator = () => {
     const unitsApprouched = startQuantity.value;
@@ -53,17 +55,15 @@ const unitsCalculator = () => {
     availableQuantity.value=unitsLeft;
 };
 const cancelOperation = () => {
-    router.push("/");
+    router.push("/"); 
 }
-
-
 </script>
 
 <template>
     <div class="container d-flex justify-content-center mt-2">
         <form @submit.prevent="saveProduct">
             <label for="productName">Product Name</label>
-            <input class="form-control mb-2 bg-light" type="text" v-model="productName" required autocomplete="productName" />
+            <input class="form-control mb-2 bg-light" type="text" v-model="productName" required autocomplete="productName"/>
 
             <label for="productDescription">Description</label>
             <textarea class="form-control mb-2 bg-light" type="text" v-model="productDescription" rows="3"></textarea> 
@@ -98,16 +98,16 @@ const cancelOperation = () => {
     
 </template>
 <style scoped>
-    .buttons{
-        display: flex;
-        flex-direction: row;
-        justify-content:space-between;
-    }
-    .container {
-  max-width: 100%; 
-  height: auto; 
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
 }
-    textarea {
+.container {
+  width: 100%; 
+  height: 100%; 
+}
+textarea {
   width: 100%; 
   height: auto; 
 }

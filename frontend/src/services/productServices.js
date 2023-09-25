@@ -11,13 +11,10 @@ class ProductDataService {
   
     create(productData) {
       return http.post(`/save`, productData);
-      // return http.post(`/create`, productData);
     }
   
     update(id, productData) {   
-    // edit(id, productData) {   
       return http.put(`/update/${id}`, productData);
-      // return http.put(`/edit/${id}`, productData);
     }
   
     delete(id) {

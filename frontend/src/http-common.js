@@ -6,4 +6,5 @@ export default axios.create({
         "Content-type": "application/json"
     }
 }) 
-// 8080/product
+
+
