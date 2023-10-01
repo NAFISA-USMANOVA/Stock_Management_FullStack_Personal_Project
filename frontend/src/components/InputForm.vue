@@ -33,7 +33,7 @@ const saveProduct = async () => {
     {
         console.log("form data", formData)
         await productServices.create(formData)
-        alert("The product is saved successfully!");
+        // alert("The product is saved successfully!");
         router.push("/")
     }
     catch (error)

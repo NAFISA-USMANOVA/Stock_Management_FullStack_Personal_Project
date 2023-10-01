@@ -3,6 +3,7 @@ import ProductList from '../components/ProductList.vue'
 import InputForm from '../components/InputForm.vue'
 import UpdateProduct from '../components/UpdateProduct.vue'
 // import FormComponent from '../components/FormComponent.vue'
+import ProductDetails from '../components/ProductDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/update/:id',
       name: 'update_product',
       component: UpdateProduct
+    },
+    {
+      path: '/product/:id',
+      name: 'ProductDetails',
+      component: ProductDetails
     }
     // {
     //   path: '/create',

@@ -1,12 +1,14 @@
 <script setup>
 import { RouterView } from 'vue-router' 
 import NavbarComponent from './components/NavbarComponent.vue';
-</script>
+import TestNav from './components/TestNav.vue';
+ </script>
 
 <template>
   <div class="background">
-    <NavbarComponent />
-    <h1>Stock control</h1>
+    <!-- <NavbarComponent />     -->
+    <TestNav/>
+    <!-- <h1>Stock control</h1> -->
     <RouterView />
   </div>
 </template>

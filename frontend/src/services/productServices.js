@@ -2,7 +2,7 @@ import http from '../http-common';
 
 class ProductDataService {
     getAll() {
-      return http.get();
+      return http.get(`/all`); //`/all`
     }
   
     get(id) {
@@ -19,6 +19,10 @@ class ProductDataService {
   
     delete(id) {
       return http.delete(`/delete/${id}`);
+    }
+///    SEARCH Function
+    search(query) {
+      return http.get('/search',{params: query});
     }
   }
   
