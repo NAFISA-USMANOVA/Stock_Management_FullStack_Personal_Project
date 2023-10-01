@@ -13,7 +13,8 @@ import NavbarComponent from './components/NavbarComponent.vue';
 
 <style scoped>
 .background{
-  background-color: rgba(31, 128, 141, 0.8);
+  /* background-color: rgba(31, 104, 141, 0.8); */
+  background:linear-gradient(to bottom, rgb(220, 189, 189),rgb(231, 107, 107), rgba(10, 112, 104, 0.8) );
   width: 100%;
   min-height: 100%;
   }

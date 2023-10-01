@@ -7,7 +7,9 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div>
-                    <a href="login" class="">Login</a>
+                    <a href="login" class="">
+                        <img src="../assets/img/User-menu.png"/>
+                    </a>
                 </div>
              </div>
         </nav>
@@ -16,7 +18,7 @@
 
 
 <style scoped>
-.navbar{
+/* .navbar{
     background-image: url('../assets/fondo-desenfocado-productos-coloridos.jpg'); 
-}
+} */
 </style>
