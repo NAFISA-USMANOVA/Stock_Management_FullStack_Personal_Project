@@ -15,11 +15,18 @@ import java.util.Optional;
 public class ProductAPIController {
     @Autowired
     private ProductService productService;
-    //    Product product;
-    @GetMapping
+    //   Product product;
+    @GetMapping("/all") //Endpoint for listing all prod.s
     public List<Product> productList() {
+
         return productService.getProductList();
     }
+    @GetMapping("/search")   // "/search" for searching products
+    public List<Product> foundProductList(@RequestParam String query) {
+
+        return productService.searchProducts(query);
+    }
+
 
     @GetMapping("/{id}")
 
@@ -29,9 +36,9 @@ public class ProductAPIController {
     }
     @PostMapping("/save")
     public Product saveProduct( @RequestBody Product product){
+
         return productService.saveProduct(product);
     }
-
     @PutMapping("/update/{id}")
     public String updateProductDetails(@PathVariable Long id, @RequestBody Product product){
         product.setId(id);

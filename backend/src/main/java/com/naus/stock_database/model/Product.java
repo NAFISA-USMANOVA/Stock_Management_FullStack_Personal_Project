@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "products")
 @Getter
 @Setter
 
@@ -25,10 +24,10 @@ public class Product{
     @Column(name = "productName", nullable = false, length = 30)
     private String productName;
 
-    @Column(name = "productDescription", nullable = false, length = 150)
+    @Column(name = "productDescription", nullable = false)
     private String productDescription;
 
-    @Column(name = "dateDeliveredInStock") //, nullable = false
+    @Column(name = "dateDeliveredInStock")
     private String date;
 
     @Column(name = "startQuantity", nullable = false, length = 10)

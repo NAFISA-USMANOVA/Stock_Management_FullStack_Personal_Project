@@ -18,6 +18,12 @@ public class ProductService {
     public List<Product> getProductList() {
         return productRepository.findAll();
     }
+    /// ========================
+public List<Product> searchProducts(String query) {
+    // Implement the database search logic here
+    return productRepository.findByProductNameContaining(query);
+}
+//// =============================
     public Optional<Product> getProduct(Long id) {
 
         return productRepository.findById(id);
