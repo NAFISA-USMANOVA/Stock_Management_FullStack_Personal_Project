@@ -6,7 +6,7 @@ class ProductDataService {
     }
   
     get(id) {
-      return http.get(`/${id}`); //??
+      return http.get(`/${id}`); 
     }
   
     create(productData) {
